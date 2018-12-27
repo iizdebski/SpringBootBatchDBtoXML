@@ -1,4 +1,4 @@
-package com.izdebski.SpringBootBatchMysqlDBtoCSV;
+package com.izdebski.SpringBootBatchMysqlDBtoXML;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringBootBatchMysqlDBtoCsvApplicationTests {
+public class SpringBootBatchMysqlDBtoXmlApplicationTests {
 
 	@Test
 	public void contextLoads() {

@@ -1,9 +1,9 @@
-package com.izdebski.SpringBootBatchMysqlDBtoCSV.config;
+package com.izdebski.SpringBootBatchMysqlDBtoXML.config;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.izdebski.SpringBootBatchMysqlDBtoCSV.model.Person;
+import com.izdebski.SpringBootBatchMysqlDBtoXML.model.Person;
 import org.springframework.jdbc.core.RowMapper;
 
 public class PersonRowMapper implements RowMapper<Person> {

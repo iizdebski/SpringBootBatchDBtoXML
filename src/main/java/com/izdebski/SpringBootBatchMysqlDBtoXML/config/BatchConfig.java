@@ -1,7 +1,7 @@
-package com.izdebski.SpringBootBatchMysqlDBtoCSV.config;
+package com.izdebski.SpringBootBatchMysqlDBtoXML.config;
 
-import com.izdebski.SpringBootBatchMysqlDBtoCSV.model.Person;
-import com.izdebski.SpringBootBatchMysqlDBtoCSV.processor.PersonItemProcessor;
+import com.izdebski.SpringBootBatchMysqlDBtoXML.model.Person;
+import com.izdebski.SpringBootBatchMysqlDBtoXML.processor.PersonItemProcessor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -9,15 +9,16 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
-import org.springframework.batch.item.file.FlatFileItemWriter;
-import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
-import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
+import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.oxm.xstream.XStreamMarshaller;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @EnableBatchProcessing
@@ -47,18 +48,17 @@ public class BatchConfig {
     }
 
     @Bean
-    public FlatFileItemWriter<Person> writer(){
-        FlatFileItemWriter<Person> writer = new FlatFileItemWriter<Person>();
-        writer.setResource(new ClassPathResource("persons.csv"));
+    public StaxEventItemWriter<Person> writer(){
+        StaxEventItemWriter<Person> writer = new StaxEventItemWriter<Person>();
+        writer.setResource(new ClassPathResource("persons.xml"));
 
-        DelimitedLineAggregator<Person> lineAggregator = new DelimitedLineAggregator<Person>();
-        lineAggregator.setDelimiter(",");
-
-        BeanWrapperFieldExtractor<Person>  fieldExtractor = new BeanWrapperFieldExtractor<Person>();
-        fieldExtractor.setNames(new String[]{"personId","firstName","lastName","email","age"});
-        lineAggregator.setFieldExtractor(fieldExtractor);
-
-        writer.setLineAggregator(lineAggregator);
+        Map<String, String> aliasesMap = new HashMap<String, String>();
+        aliasesMap.put("person", "com.izdebski.SpringBootBatchMysqlDBtoXML.model.Person");
+        XStreamMarshaller marshaller = new XStreamMarshaller();
+        marshaller.setAliases(aliasesMap);
+        writer.setMarshaller(marshaller);
+        writer.setRootTagName("persons");
+        writer.setOverwriteOutput(true);
         return writer;
     }
 

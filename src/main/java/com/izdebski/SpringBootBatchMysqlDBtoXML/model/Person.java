@@ -1,4 +1,4 @@
-package com.izdebski.SpringBootBatchMysqlDBtoCSV.model;
+package com.izdebski.SpringBootBatchMysqlDBtoXML.model;
 
 public class Person {
 

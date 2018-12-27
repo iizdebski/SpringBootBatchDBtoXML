@@ -1,6 +1,6 @@
-package com.izdebski.SpringBootBatchMysqlDBtoCSV.processor;
+package com.izdebski.SpringBootBatchMysqlDBtoXML.processor;
 
-import com.izdebski.SpringBootBatchMysqlDBtoCSV.model.Person;
+import com.izdebski.SpringBootBatchMysqlDBtoXML.model.Person;
 import org.springframework.batch.item.ItemProcessor;
 
 public class PersonItemProcessor implements ItemProcessor<Person, Person> {
